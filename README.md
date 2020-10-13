@@ -43,8 +43,6 @@ In this resository we will discuss the following things step-by-step:
 <br>
 <p align="center"><img src="Images/1.png"></p>
 <br>
-<br>
-<br>
 
 
 ## Data types and null values check
@@ -163,8 +161,6 @@ No because the samples are not uniform in the dataset.**
 <br>
 <p align="center"><img src="Images/2.png"></p>
 <br>
-<br>
-<br>
 
 
 ## Investigating a single image
@@ -184,8 +180,6 @@ No because the samples are not uniform in the dataset.**
 <br>
 <p align="center"><img src="Images/3.png"></p>
 <br>
-<br>
-<br>
 
 
 ## Investigating pixel value distribution
@@ -200,8 +194,6 @@ No because the samples are not uniform in the dataset.**
     plt.ylabel('# Pixels in Image')
 <br>
 <p align="center"><img src="Images/4.png"></p>
-<br>
-<br>
 <br>
 
 ## Image Preprocessing in Keras
@@ -265,8 +257,6 @@ No because the samples are not uniform in the dataset.**
 <br>
 <p align="center"><img src="Images/5.png"></p>
 <br>
-<br>
-<br>
 
 ## Seeing a comparison of the distribution of pixel values in the new pre-processed image versus the raw image
 <br>
@@ -296,6 +286,4 @@ No because the samples are not uniform in the dataset.**
     plt.ylabel('# Pixel')
 <br>
 <p align="center"><img src="Images/6.png"></p>
-<br>
-<br>
 <br>
