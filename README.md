@@ -13,15 +13,15 @@ While doing data exploration, we have to follow certain steps which I am going t
 
 1) We have to load the dataset and have a look at it
 
-2) We have to check what are different categories of data types are there in the dataset such as: categorical, continous, etc...
+2) We have to check what are different categories of data types are there in the dataset such as categorical, continuous, etc.
 
-3) As we have seen the data, now we have to remove the useless data which won't help in exploration such as patient_id, image_url etc..
+3) As we have seen the data, now we have to remove the useless data which won't help in exploration such as patient_id, image_url etc.
 
-4) We alos have to check whehter there is duplcate entries are there in the dataset, if it's there then remove it.
+4) We also have to check whether there is duplicate entries are there in the dataset if it's there then remove it.
 
 5) Data Visualization - exploring the images it's histogram. It's important to see the distribution of image because most of the ML algo works best at 0 **Mean** and unit **Standard deviation**. To **Standardize** the dataset we can use **ImageDataGenerator** from **Keras**.
 
-We have seen the steps which are requrired to follow in data exploration of dataset, now let's do them step-by-step.
+We have seen the steps which are required to follow in data exploration of a dataset, now let's do them step-by-step.
 
 
 #### Importing necessary packages
@@ -77,10 +77,10 @@ We have seen the steps which are requrired to follow in data exploration of data
 
     print(f"The total patient ids are {train_df['PatientId'].count()}, from those the unique ids are {train_df['PatientId'].value_counts().shape[0]}")
 
-    Ouput :
+    Output :
     The total patient ids are 1000, from those the unique ids are 928 
 
-As we can see, the number of unique patients in the dataset is less than the total number so there must be some overlap. For patients with multiple records, we'll want to make sure they do not show up in both training and test sets in order to avoid data leakage.
+As we can see, the number of unique patients in the dataset is less than the total number so there must be some overlap. For patients with multiple records, we'll want to make sure they do not show up in both training and test sets to avoid data leakage.
 
 
 ### Exploring data labels
@@ -127,7 +127,7 @@ As we can see, the number of unique patients in the dataset is less than the tot
  
 Have a look at the counts for the labels in each class above. Does this look like a balanced dataset?
  
-No because the samples are not uniform in the dataset.
+No, because the samples are not uniform in the dataset.
 
 ### Data Visualization
 
@@ -189,7 +189,7 @@ No because the samples are not uniform in the dataset.
 
 ### Image Preprocessing in Keras
 
-Before training, we'll first modify our images to be better suited for training a convolutional neural network. For this task we'll use the Keras ImageDataGenerator function to perform data preprocessing and data augmentation.
+Before training, we'll first modify our images to be better suited for training a convolutional neural network. For this task, we'll use the Keras ImageDataGenerator function to perform data preprocessing and data augmentation.
 <br>
 
 #### Importing data generator from keras
@@ -215,7 +215,7 @@ In other words, the generator will replace each pixel value in the image with a 
 
 ### Pre-processing our data using the image_generator. 
 
-In this step we will also be reducing the image size down to 320x320 pixels.
+In this step, we will also be reducing the image size down to 320x320 pixels.
 <br>
 
 #### Flow from directory with specified batch size and target image size
@@ -247,7 +247,7 @@ In this step we will also be reducing the image size down to 320x320 pixels.
 <br>
 <p align="center"><img src="Images/5.png"></p>
 
-### Seeing a comparison of the distribution of pixel values in the new pre-processed image versus the raw imagez
+### Seeing a comparison of the distribution of pixel values in the new pre-processed image versus the raw image
 
 #### Including a histogram of the distribution of the pixels
     sns.set()
@@ -278,7 +278,7 @@ In this step we will also be reducing the image size down to 320x320 pixels.
 
 ### Handling Data Imbalance using Weighted Loss Function
 
-We know that in real-world especially in *Medical* field there is high imbalance in the dataset. As we know that most of the people are physically fit only a few have disease it is very difficult to have the medical data in large amount. Always the data having label as *normal* is more as compared to *abnormal* in *Medical* data. So it is very important to know how to deal with such situtation. In further conversation we wil discuss of how to deal with it.
+We know that in real-world especially in *Medical* field there is a high imbalance in the dataset. As we know that most of the people are physically fit only a few have diseases it is very difficult to have the medical data in a large amount. Always the data having a label as *normal* is more as compared to *abnormal* in *Medical* data. So it is very important to know how to deal with such situations. In further conversation, we will discuss how to deal with it.
 
 
 #### Counting up the number of instances of each class
@@ -314,11 +314,11 @@ We know that in real-world especially in *Medical* field there is high imbalance
 <p align="center"><img src="Images/7.png"></p>
 
 
-From the plot above we can see that there is high imbalance between the classes.
+From the plot above we can see that there is a high imbalance between the classes.
 
 Now we will see what happens if we don't do anything and use the same *Loss Function* for training.
 
-Creating a demo dataset, containing 4 labels out of which 3 are *1* and one is *1*. Now consider 2 models, one always predicts 0.9 as probability of label 1 and other alsways predicts 0.1 as probability of label 1. Theoretically, loss calculated should be same because both are bad models.
+Creating a demo dataset, containing 4 labels out of which 3 are *1* and one is *1*. Now consider 2 models, one always predicts 0.9 as the probability of label 1 and other always predicts 0.1 as the probability of label 1. Theoretically, loss calculated should be the same because both are bad models.
 
 ### Creating the *ground truth* labels
     y_true = np.array(
@@ -400,7 +400,7 @@ With a weighted loss function, we will get the same weighted loss when the predi
 
 ### Weighted Loss Equation
 
-Calculate the loss for the zero-th label
+Calculate the loss for the zeroth label
  
 The loss is made up of two terms. To make it easier to read the code, we will calculate each of these terms separately. We are giving each of these two terms a name for explanatory purposes, but these are not officially called *losspos* or *lossneg*.
 
@@ -412,9 +412,9 @@ The loss is made up of two terms. To make it easier to read the code, we will ca
 <p align="center"><img src="Images/3.gif"></p>
 <p align="center"><img src="Images/4.gif"></p>
 
-Since this sample dataset is small enough, we can calculate the positive weight to be used in the weighted loss function. To get the positive weight, count how many NEGATIVE labels are present, divided by the total number of examples.
+Since this sample dataset is small enough, we can calculate the positive weight to be used in the weighted loss function. To get a positive weight, count how many NEGATIVE labels are present, divided by the total number of examples.
 
-In this case, there is one negative label, and four total example. Similarly, the negative weight is the fraction of positive labels.
+In this case, there is one negative label and four total examples. Similarly, the negative weight is the fraction of positive labels.
 
 
 ### Defining positive and negative weights
@@ -508,5 +508,6 @@ Even though there is a class imbalance, where there are 3 positive labels but on
 The data as well as the predictions were chosen so that we end up getting the same weighted loss for both categories.
  
 In general, we will expect to calculate different weighted loss values for each disease category, as the model predictions and data will differ from one category to another.
+<br>
 
-
+## Creating a pipeline for training Densenet on Medical Data
