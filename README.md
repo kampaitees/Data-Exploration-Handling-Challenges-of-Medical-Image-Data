@@ -41,7 +41,7 @@ In this resository we will discuss the following things step-by-step:
     print(f'There are {train_df.shape[0]} rows and {train_df.shape[1]} columns in this data frame')
     train_df.head()
 <br>
-<p align="center"><img src="images/1.png"></p>
+<p align="center"><img src="Images/1.png"></p>
 <br>
 <br>
 <br>
@@ -161,7 +161,7 @@ No because the samples are not uniform in the dataset.**
 #### Adjustting subplot parameters to give specified padding
     plt.tight_layout()   
 <br>
-<p align="center"><img src="images/2.png"></p>
+<p align="center"><img src="Images/2.png"></p>
 <br>
 <br>
 <br>
@@ -182,7 +182,7 @@ No because the samples are not uniform in the dataset.**
 
 
 <br>
-<p align="center"><img src="images/3.png"></p>
+<p align="center"><img src="Images/3.png"></p>
 <br>
 <br>
 <br>
@@ -199,7 +199,7 @@ No because the samples are not uniform in the dataset.**
     plt.xlabel('Pixel Intensity')
     plt.ylabel('# Pixels in Image')
 <br>
-<p align="center"><img src="images/4.png"></p>
+<p align="center"><img src="Images/4.png"></p>
 <br>
 <br>
 <br>
@@ -228,7 +228,7 @@ No because the samples are not uniform in the dataset.**
 **In other words, the generator will replace each pixel value in the image with a new value calculated by subtracting the mean and dividing by the standard deviation.**
 
 <br>
-<p align="center"><img src="images/1.gif"></p>
+<p align="center"><img src="Images/1.gif"></p>
 <br>
 
 ## Pre-processing our data using the image_generator. 
@@ -263,7 +263,7 @@ No because the samples are not uniform in the dataset.**
     print(f"The maximum pixel value is {generated_image.max():.4f} and the minimum is {generated_image.min():.4f}")
     print(f"The mean value of the pixels is {generated_image.mean():.4f} and the standard deviation is {generated_image.std():.4f}")
 <br>
-<p align="center"><img src="images/5.png"></p>
+<p align="center"><img src="Images/5.png"></p>
 <br>
 <br>
 <br>
@@ -295,7 +295,7 @@ No because the samples are not uniform in the dataset.**
     plt.xlabel('Pixel Intensity')
     plt.ylabel('# Pixel')
 <br>
-<p align="center"><img src="images/6.png"></p>
+<p align="center"><img src="Images/6.png"></p>
 <br>
 <br>
 <br>
