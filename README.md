@@ -662,3 +662,154 @@ Now we will discuss the Keras implementation of **Densenet**. How to use it for 
 
 ## Patient Overlap and Data Leakage
 
+Now we will discuss a strategy for creating **Training**, **Validation** & **Testing** set for medical data and the problem with regular practice.
+
+Normally we create **Training**, **Validation** & **Testing** by randomly dividing them into **70-15-15** / **80-10-10**. The problem with especially in medical data is that, if we do so there might be chances that the same patient may appear in **Training** and **Validation** or **Testing** and **Training** or **Validation** and **Testing**, but we do not want that.
+
+We want that we do not test on the same patient whom we have already trained. 
+
+Consider below image:
+
+<p align="center"><img width="500" src="Images/9.jpg"></p>
+
+We can see that there is necklace around the neck, if by chance our model has learned that a person having necklace has a particular label then it will predict correctly when same patient image wearing necklace will be there in **Testing/Validation** set. Thereby, making us **Overly Optimistic** on the model. So we need to carefully divide the data into 
+**Training**/**Validation**/**Testing** set.
+
+
+Patient overlap in medical data is a part of a more general problem in machine learning called **Data Leakage**. To identify patient overlap, we'll check to see if a patient's ID appears in both the training set and the test set. We should also verify that we don't have patient overlap in the training and validation sets, which is what we'll do here.
+
+Below is a simple example showing how we can check for and remove patient overlap in our training and validations sets.
+
+
+#### Import necessary packages
+    import pandas as pd
+    import numpy as np
+    import matplotlib.pyplot as plt
+    %matplotlib inline
+    import os
+    import seaborn as sns
+    sns.set()
+
+
+#### Read csv file containing training data
+    train_df = pd.read_csv("nih/train-small.csv")
+
+#### Print first 5 rows
+    print(f'There are {train_df.shape[0]} rows and {train_df.shape[1]} columns in the training dataframe')
+    
+    train_df.head()
+
+
+<p align="center"><img height="120" src="Images/10.png"></p>
+
+
+### Extract and compare the PatientId columns from the train and validation sets
+
+By running the next four cells we will do the following:
+
+- Extracting patient IDs from the train and validation sets
+- Converting these arrays of numbers into set() datatypes for easy comparison
+- Identifying patient overlap in the intersection of the two sets
+
+
+#### Extract patient id's for the training set
+    ids_train = train_df.PatientId.values
+
+#### Extract patient id's for the validation set
+    ids_valid = valid_df.PatientId.values
+
+#### Create a "set" datastructure of the training & Test set id's to identify unique id's
+    ids_train_set = set(ids_train)
+    print(f'There are {len(ids_train_set)} unique Patient IDs in the training set')
+
+    ids_valid_set = set(ids_valid)
+    print(f'There are {len(ids_valid_set)} unique Patient IDs in the validation set')
+
+    Output:
+    There are 928 unique Patient IDs in the training set
+    There are 97 unique Patient IDs in the validation set
+
+#### Identify patient overlap by looking at the intersection between the sets
+    patient_overlap = list(ids_train_set.intersection(ids_valid_set))
+    n_overlap = len(patient_overlap)
+    print(f'There are {n_overlap} Patient IDs in both the training and validation sets')
+    print('')
+    print(f'These patients are in both the training and validation datasets:')
+    print(f'{patient_overlap}')
+
+    Output:
+    There are 11 Patient IDs in both the training and validation sets
+
+    These patients are in both the training and validation datasets:
+    [20290, 27618, 9925, 10888, 22764, 19981, 18253, 4461, 28208, 8760, 7482]
+
+### Identifying rows (indices) of overlapping patients and remove from either the train or validation set
+Running the next two cells to do the following:
+
+- Create lists of the overlapping row numbers in both the training and validation sets.
+- Drop the overlapping patient records from the validation set (could also choose to drop from train set)
+
+#### Creating lists of the overlapping row numbers in both the training and validation sets
+    train_overlap_idxs = []
+    valid_overlap_idxs = []
+    for idx in range(n_overlap):
+        train_overlap_idxs.extend(train_df.index[train_df['PatientId'] == patient_overlap[idx]].tolist())
+        valid_overlap_idxs.extend(valid_df.index[valid_df['PatientId'] == patient_overlap[idx]].tolist())
+        
+    print(f'These are the indices of overlapping patients in the training set: ')
+    print(f'{train_overlap_idxs}')
+    print(f'These are the indices of overlapping patients in the validation set: ')
+    print(f'{valid_overlap_idxs}')
+    
+    Output:
+    These are the indices of overlapping patients in the training set: 
+    [306, 186, 797, 98, 408, 917, 327, 913, 10, 51, 276]
+    These are the indices of overlapping patients in the validation set: 
+    [104, 88, 65, 13, 2, 41, 56, 70, 26, 75, 20, 52, 55]
+
+#### Dropping the overlapping patient records from the validation set (could also choose to drop from train set)
+    train_overlap_idxs = []
+    valid_overlap_idxs = []
+    for idx in range(n_overlap):
+        train_overlap_idxs.extend(train_df.index[train_df['PatientId'] == patient_overlap[idx]].tolist())
+        valid_overlap_idxs.extend(valid_df.index[valid_df['PatientId'] == patient_overlap[idx]].tolist())
+        
+    print(f'These are the indices of overlapping patients in the training set: ')
+    print(f'{train_overlap_idxs}')
+    print(f'These are the indices of overlapping patients in the validation set: ')
+    print(f'{valid_overlap_idxs}')
+    
+    Output:
+    These are the indices of overlapping patients in the training set: 
+    [306, 186, 797, 98, 408, 917, 327, 913, 10, 51, 276]
+    These are the indices of overlapping patients in the validation set: 
+    [104, 88, 65, 13, 2, 41, 56, 70, 26, 75, 20, 52, 55]
+
+#### Drop the overlapping rows from the validation set
+    valid_df.drop(valid_overlap_idxs, inplace=True)
+
+**Checking that everything worked as planned by rerunning the patient ID comparison between train and validation sets.**
+When we run the next two cells we should see that there are now fewer records in the validation set and that the overlap problem has been removed!
+
+#### Extracting patient id's for the validation set
+    ids_valid = valid_df.PatientId.values
+ 
+#### Creating a "set" datastructure of the validation set id's to identify unique id's
+    ids_valid_set = set(ids_valid)
+    print(f'There are {len(ids_valid_set)} unique Patient IDs in the validation set')
+    
+    Output:
+    There are 86 unique Patient IDs in the validation set
+
+#### Identify patient overlap by looking at the intersection between the sets
+    patient_overlap = list(ids_train_set.intersection(ids_valid_set))
+    n_overlap = len(patient_overlap)
+    print(f'There are {n_overlap} Patient IDs in both the training and validation sets')
+    
+    Output:
+    There are 0 Patient IDs in both the training and validation sets
+
+
+If you are still here then **Congratulations !!!** you now know how to handles various challenges in **Medical** data as well as how to do medical **Data exploration**.
+
+If you liked the article, follow my GitHub([@kampaitees](https://github.com/kampaitees)) to get updates about the upcoming articles. Also, share this article so that it can reach out to the readers who can gain from this. Please feel free to discuss anything regarding the post. I would love to hear feedback from you.
