@@ -5,10 +5,9 @@ In this resository we will discuss the following things step-by-step:
 - [Handling **Data Imbalance** within classes of a dataset](https://nbviewer.jupyter.org/github/kampaitees/Medical-Data-Exploration-Handling-Challenges/blob/main/Handling%20Data%20Imbalance%20using%20Weighted%20Loss%20Function.ipynb)
 - [Creating pipeline for training **Densenet** on Medical Data](https://nbviewer.jupyter.org/github/kampaitees/Medical-Data-Exploration-Handling-Challenges/blob/main/Pipeline%20for%20training%20Densenet.ipynb)
 - [**Handling Patient Overlap**(**Data Leakage**) problem in dataset](https://nbviewer.jupyter.org/github/kampaitees/Medical-Data-Exploration-Handling-Challenges/blob/main/Handling%20Patient%20Overlap%20%26%20Data%20Leakage.ipynb)
-  
+<br>
 
 # Data Exploration of ChestX-ray8 dataset 
-<br>
 
 **While doing data exploration, we have to follow certain steps which I am going to discuss below:**
 
@@ -21,11 +20,11 @@ In this resository we will discuss the following things step-by-step:
 4) We alos have to check whehter there is duplcate entries are there in the dataset, if it's there then remove it.
 
 5) Data Visualization - exploring the images it's histogram. It's important to see the distribution of image because most of the ML algo works best at 0 **Mean** and unit **Standard deviation**. To **Standardize** the dataset we can use **ImageDataGenerator** from **Keras**.
-<br>
 
 **We have seen the steps which are requrired to follow in data exploration of dataset, now let's do them step-by-step.**
 
 <br>
+
 #### Importing necessary packages
     import pandas as pd
     import numpy as np
@@ -46,7 +45,7 @@ In this resository we will discuss the following things step-by-step:
 
 
 ## Data types and null values check
-<br>
+
 #### Look at the data type of each column and whether null values are present
     train_df.info()
 
@@ -75,7 +74,7 @@ In this resository we will discuss the following things step-by-step:
 
 ## Unique IDs check
 
-**"PatientId" has an identification number for each patient. One thing we'd like to know about a medical dataset like this is if we're looking at repeated data for certain patients or whether each image represents a different person.**
+***PatientId* has an identification number for each patient. One thing we'd like to know about a medical dataset like this is if we're looking at repeated data for certain patients or whether each image represents a different person.**
 
     print(f"The total patient ids are {train_df['PatientId'].count()}, from those the unique ids are {train_df['PatientId'].value_counts().shape[0]}")
 
@@ -86,7 +85,6 @@ In this resository we will discuss the following things step-by-step:
 
 
 ## Exploring data labels
-<br>
 
 #### Running the next two code cells to create a list of the names of each patient condition or disease.
 
@@ -128,12 +126,11 @@ In this resository we will discuss the following things step-by-step:
     The class Pneumonia has 10 samples
     The class Pneumothorax has 38 samples
  
-**Have a look at the counts for the labels in each class above. Does this look like a balanced dataset?
-
-No because the samples are not uniform in the dataset.**
+**Have a look at the counts for the labels in each class above. Does this look like a balanced dataset?**
+ 
+**No because the samples are not uniform in the dataset.**
 
 ## Data Visualization
-<br>
 
 #### Extracting numpy values from Image column in data frame
     images = train_df['Image'].values
@@ -164,7 +161,6 @@ No because the samples are not uniform in the dataset.**
 
 
 ## Investigating a single image
-<br>
 
 #### Getting the first image that was listed in the train_df dataframe
     sample_img = train_df.Image[0]
@@ -183,7 +179,6 @@ No because the samples are not uniform in the dataset.**
 
 
 ## Investigating pixel value distribution
-<br>
 
 #### Plotting a histogram of the distribution of the pixels
     sns.distplot(raw_image.ravel(), 
@@ -194,7 +189,6 @@ No because the samples are not uniform in the dataset.**
     plt.ylabel('# Pixels in Image')
 <br>
 <p align="center"><img src="Images/4.png"></p>
-<br>
 
 ## Image Preprocessing in Keras
 
@@ -221,7 +215,6 @@ No because the samples are not uniform in the dataset.**
 
 <br>
 <p align="center"><img src="Images/1.gif"></p>
-<br>
 
 ## Pre-processing our data using the image_generator. 
 
@@ -256,10 +249,8 @@ No because the samples are not uniform in the dataset.**
     print(f"The mean value of the pixels is {generated_image.mean():.4f} and the standard deviation is {generated_image.std():.4f}")
 <br>
 <p align="center"><img src="Images/5.png"></p>
-<br>
 
-## Seeing a comparison of the distribution of pixel values in the new pre-processed image versus the raw image
-<br>
+## Seeing a comparison of the distribution of pixel values in the new pre-processed image versus the raw imagez
 
 #### Including a histogram of the distribution of the pixels
     sns.set()
