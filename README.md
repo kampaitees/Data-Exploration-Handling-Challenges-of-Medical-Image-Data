@@ -9,7 +9,7 @@ In this resository we will discuss the following things step-by-step:
 
 ## Data Exploration of ChestX-ray8 dataset 
 
-**While doing data exploration, we have to follow certain steps which I am going to discuss below:**
+While doing data exploration, we have to follow certain steps which I am going to discuss below:
 
 1) We have to load the dataset and have a look at it
 
@@ -21,7 +21,7 @@ In this resository we will discuss the following things step-by-step:
 
 5) Data Visualization - exploring the images it's histogram. It's important to see the distribution of image because most of the ML algo works best at 0 **Mean** and unit **Standard deviation**. To **Standardize** the dataset we can use **ImageDataGenerator** from **Keras**.
 
-**We have seen the steps which are requrired to follow in data exploration of dataset, now let's do them step-by-step.**
+We have seen the steps which are requrired to follow in data exploration of dataset, now let's do them step-by-step.
 
 
 #### Importing necessary packages
@@ -73,14 +73,14 @@ In this resository we will discuss the following things step-by-step:
 
 ### Unique IDs check
 
-***PatientId* has an identification number for each patient. One thing we'd like to know about a medical dataset like this is if we're looking at repeated data for certain patients or whether each image represents a different person.**
+*PatientId* has an identification number for each patient. One thing we'd like to know about a medical dataset like this is if we're looking at repeated data for certain patients or whether each image represents a different person.
 
     print(f"The total patient ids are {train_df['PatientId'].count()}, from those the unique ids are {train_df['PatientId'].value_counts().shape[0]}")
 
     Ouput :
     The total patient ids are 1000, from those the unique ids are 928 
 
-**As we can see, the number of unique patients in the dataset is less than the total number so there must be some overlap. For patients with multiple records, we'll want to make sure they do not show up in both training and test sets in order to avoid data leakage.**
+As we can see, the number of unique patients in the dataset is less than the total number so there must be some overlap. For patients with multiple records, we'll want to make sure they do not show up in both training and test sets in order to avoid data leakage.
 
 
 ### Exploring data labels
@@ -125,9 +125,9 @@ In this resository we will discuss the following things step-by-step:
     The class Pneumonia has 10 samples
     The class Pneumothorax has 38 samples
  
-**Have a look at the counts for the labels in each class above. Does this look like a balanced dataset?**
+Have a look at the counts for the labels in each class above. Does this look like a balanced dataset?
  
-**No because the samples are not uniform in the dataset.**
+No because the samples are not uniform in the dataset.
 
 ### Data Visualization
 
@@ -189,7 +189,7 @@ In this resository we will discuss the following things step-by-step:
 
 ### Image Preprocessing in Keras
 
-**Before training, we'll first modify our images to be better suited for training a convolutional neural network. For this task we'll use the Keras ImageDataGenerator function to perform data preprocessing and data augmentation.**
+Before training, we'll first modify our images to be better suited for training a convolutional neural network. For this task we'll use the Keras ImageDataGenerator function to perform data preprocessing and data augmentation.
 <br>
 
 #### Importing data generator from keras
@@ -206,16 +206,16 @@ In this resository we will discuss the following things step-by-step:
 
 
 ### Standardizationing pixel values
-**The image_generator we created above will act to adjust our image data such that the new mean of the data will be zero, and the standard deviation of the data will be 1.**
+The image_generator we created above will act to adjust our image data such that the new mean of the data will be zero, and the standard deviation of the data will be 1.
  
-**In other words, the generator will replace each pixel value in the image with a new value calculated by subtracting the mean and dividing by the standard deviation.**
+In other words, the generator will replace each pixel value in the image with a new value calculated by subtracting the mean and dividing by the standard deviation.
 
 <br>
 <p align="center"><img src="Images/1.gif"></p>
 
 ### Pre-processing our data using the image_generator. 
 
-**In this step we will also be reducing the image size down to 320x320 pixels.**
+In this step we will also be reducing the image size down to 320x320 pixels.
 <br>
 
 #### Flow from directory with specified batch size and target image size
@@ -278,7 +278,7 @@ In this resository we will discuss the following things step-by-step:
 
 ### Handling Data Imbalance using Weighted Loss Function
 
-**We know that in real-world especially in *Medical* field there is high imbalance in the dataset. As we know that most of the people are physically fit only a few have disease it is very difficult to have the medical data in large amount. Always the data having label as *normal* is more as compared to *abnormal* in *Medical* data. So it is very important to know how to deal with such situtation. In further conversation we wil discuss of how to deal with it.**
+We know that in real-world especially in *Medical* field there is high imbalance in the dataset. As we know that most of the people are physically fit only a few have disease it is very difficult to have the medical data in large amount. Always the data having label as *normal* is more as compared to *abnormal* in *Medical* data. So it is very important to know how to deal with such situtation. In further conversation we wil discuss of how to deal with it.
 
 
 #### Counting up the number of instances of each class
@@ -314,13 +314,13 @@ In this resository we will discuss the following things step-by-step:
 <p align="center"><img src="Images/7.png"></p>
 
 
-**From the plot above we can see that there is high imbalance between the classes.**
+From the plot above we can see that there is high imbalance between the classes.
 
-**Now we will see what happens if we don't do anything and use the same *Loss Function* for training.**
+Now we will see what happens if we don't do anything and use the same *Loss Function* for training.
 
-**Creating a demo dataset, containing 4 labels out of which 3 are *1* and one is *1*. Now consider 2 models, one always predicts 0.9 as probability of label 1 and other alsways predicts 0.1 as probability of label 1. Theoretically, loss calculated should be same because both are bad models.**
+Creating a demo dataset, containing 4 labels out of which 3 are *1* and one is *1*. Now consider 2 models, one always predicts 0.9 as probability of label 1 and other alsways predicts 0.1 as probability of label 1. Theoretically, loss calculated should be same because both are bad models.
 
-### Creating the 'ground truth' labels
+### Creating the *ground truth* labels
     y_true = np.array(
         [[1],
          [1],
@@ -337,7 +337,7 @@ In this resository we will discuss the following things step-by-step:
 
 ### Two models
 
-**To better understand the loss function, we will pretend that we have two models.**
+To better understand the loss function, we will pretend that we have two models.
 - Model 1 always outputs a 0.9 for any example that it's given.
 - Model 2 always outputs a 0.1 for any example that it's given.
 
@@ -386,13 +386,13 @@ In this resository we will discuss the following things step-by-step:
     When the model 2 always predicts 0.1, the regular loss is 7.0131
 
 
-**Notice that the loss function gives a greater loss when the predictions are always 0.1, because the data is imbalanced, and has three labels of 1 but only one label for 0.**
+Notice that the loss function gives a greater loss when the predictions are always 0.1, because the data is imbalanced, and has three labels of 1 but only one label for 0.
 
-**Given a class imbalance with more positive labels, the regular loss function implies that the model with the higher prediction of 0.9 performs better than the model with the lower prediction of 0.1 Which is not the case as both models are equally bad.**
+Given a class imbalance with more positive labels, the regular loss function implies that the model with the higher prediction of 0.9 performs better than the model with the lower prediction of 0.1 Which is not the case as both models are equally bad.
 
 ### How a weighted loss treats both models the same
 
-**With a weighted loss function, we will get the same weighted loss when the predictions are all 0.9 versus when the predictions are all 0.1.**
+With a weighted loss function, we will get the same weighted loss when the predictions are all 0.9 versus when the predictions are all 0.1.
 
 - Notice how a prediction of 0.9 is 0.1 away from the positive label of 1.
 - Also notice how a prediction of 0.1 is 0.1 away from the negative label of 0.
@@ -400,9 +400,9 @@ In this resository we will discuss the following things step-by-step:
 
 ### Weighted Loss Equation
 
-**Calculate the loss for the zero-th label**
+Calculate the loss for the zero-th label
  
-**The loss is made up of two terms. To make it easier to read the code, we will calculate each of these terms separately. We are giving each of these two terms a name for explanatory purposes, but these are not officially called *losspos* or *lossneg***
+The loss is made up of two terms. To make it easier to read the code, we will calculate each of these terms separately. We are giving each of these two terms a name for explanatory purposes, but these are not officially called *losspos* or *lossneg*.
 
 - *losspos*: we'll use this to refer to the loss where the actual label is positive (the positive examples).
 - *lossneg*: we'll use this to refer to the loss where the actual label is negative (the negative examples).
@@ -412,9 +412,9 @@ In this resository we will discuss the following things step-by-step:
 <p align="center"><img src="Images/3.gif"></p>
 <p align="center"><img src="Images/4.gif"></p>
 
-**Since this sample dataset is small enough, we can calculate the positive weight to be used in the weighted loss function. To get the positive weight, count how many NEGATIVE labels are present, divided by the total number of examples.**
+Since this sample dataset is small enough, we can calculate the positive weight to be used in the weighted loss function. To get the positive weight, count how many NEGATIVE labels are present, divided by the total number of examples.
 
-**In this case, there is one negative label, and four total example. Similarly, the negative weight is the fraction of positive labels.**
+In this case, there is one negative label, and four total example. Similarly, the negative weight is the fraction of positive labels.
 
 
 ### Defining positive and negative weights
@@ -434,7 +434,7 @@ In this resository we will discuss the following things step-by-step:
 
 ### Model 1 weighted loss
 
-**Here, loss_1_pos and loss_1_neg are calculated using the y_pred_1 predictions.**
+Here, loss_1_pos and loss_1_neg are calculated using the y_pred_1 predictions.
 
 #### Calculating and printing out the first term in the loss function, which we are calling 'loss_pos'
     loss_1_pos = -1 * np.sum(w_p * y_true * np.log(y_pred_1 ))
@@ -459,7 +459,7 @@ In this resository we will discuss the following things step-by-step:
 
 ### Model 2 weighted loss
 
-**Now do the same calculations for when the predictions are from `y_pred_2'. Calculate the two terms of the weighted loss function and add them together.**
+Now do the same calculations for when the predictions are from `y_pred_2'. Calculate the two terms of the weighted loss function and add them together.
 
 #### Calculating and printing out the first term in the loss function, which we are calling 'loss_pos'
     loss_2_pos = -1 * np.sum(w_p * y_true * np.log(y_pred_2))
@@ -491,9 +491,9 @@ In this resository we will discuss the following things step-by-step:
     When the model always predicts 0.1, the total loss is 1.8060
 
 ### What do we notice?
-**Since we used a weighted loss, the calculated loss is the same whether the model always predicts 0.9 or always predicts 0.1.**
+Since we used a weighted loss, the calculated loss is the same whether the model always predicts 0.9 or always predicts 0.1.
 
-**we may have also noticed that when we calculate each term of the weighted loss separately, there is a bit of symmetry when comparing between the two sets of predictions.**
+we may have also noticed that when we calculate each term of the weighted loss separately, there is a bit of symmetry when comparing between the two sets of predictions.
 
     print(f"loss_1_pos: {loss_1_pos:.4f} \t loss_1_neg: {loss_1_neg:.4f}")
     print()
@@ -503,10 +503,10 @@ In this resository we will discuss the following things step-by-step:
     loss_1_pos: 0.0790 	 loss_1_neg: 1.7269
     loss_2_pos: 1.7269 	 loss_2_neg: 0.0790
 
-**Even though there is a class imbalance, where there are 3 positive labels but only one negative label, the weighted loss accounts for this by giving more weight to the negative label than to the positive label.**
+Even though there is a class imbalance, where there are 3 positive labels but only one negative label, the weighted loss accounts for this by giving more weight to the negative label than to the positive label.
 
-**The data as well as the predictions were chosen so that we end up getting the same weighted loss for both categories.**
+The data as well as the predictions were chosen so that we end up getting the same weighted loss for both categories.
  
-**In general, we will expect to calculate different weighted loss values for each disease category, as the model predictions and data will differ from one category to another.**
+In general, we will expect to calculate different weighted loss values for each disease category, as the model predictions and data will differ from one category to another.
 
 
