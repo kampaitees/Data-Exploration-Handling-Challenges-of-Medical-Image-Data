@@ -23,7 +23,6 @@ In this resository we will discuss the following things step-by-step:
 
 **We have seen the steps which are requrired to follow in data exploration of dataset, now let's do them step-by-step.**
 
-<br>
 
 #### Importing necessary packages
     import pandas as pd
@@ -157,7 +156,6 @@ In this resository we will discuss the following things step-by-step:
     plt.tight_layout()   
 <br>
 <p align="center"><img src="Images/2.png"></p>
-<br>
 
 
 ## Investigating a single image
@@ -175,7 +173,6 @@ In this resository we will discuss the following things step-by-step:
 
 <br>
 <p align="center"><img src="Images/3.png"></p>
-<br>
 
 
 ## Investigating pixel value distribution
