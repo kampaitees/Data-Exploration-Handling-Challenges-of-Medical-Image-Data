@@ -525,8 +525,7 @@ For a detailed explanation of Densenet, check out the source of the image above,
  
 Now we will discuss the Keras implementation of **Densenet**. How to use it for training on Image Dataset.
 
-#### Keras implementation of Densenet
-
+#### Importing Densenet from Keras
     import warnings
     warnings.filterwarnings('ignore')
     from keras.applications.densenet import DenseNet121
