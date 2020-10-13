@@ -511,3 +511,155 @@ In general, we will expect to calculate different weighted loss values for each 
 <br>
 
 ## Creating a pipeline for training Densenet on Medical Data
+
+Now we will discuss **Densenet**(a famous CNN architecture which performed extremely well on **Imagenet** dataset inspired by **Resnet**)  is a convolutional network where each layer is connected to all other layers that are deeper in the network.
+ 
+- The first layer is connected to the 2nd, 3rd, 4th etc.
+- The second layer is connected to the 3rd, 4th, 5th etc.
+
+Like this:
+
+<p align="center"><img width="500" src="Images/8.png"></p>
+
+For a detailed explanation of Densenet, check out the source of the image above, a paper by Gao Huang et al. 2018 called [Densely Connected Convolutional Networks](https://arxiv.org/pdf/1608.06993.pdf)
+ 
+Now we will discuss the Keras implementation of **Densenet**. How to use it for training on Image Dataset.
+
+#### Keras implementation of Densenet
+
+    import warnings
+    warnings.filterwarnings('ignore')
+    from keras.applications.densenet import DenseNet121
+    from keras.layers import Dense, GlobalAveragePooling2D
+    from keras.models import Model
+    from keras import backend as K
+
+#### Creating the base pre-trained model
+    base_model = DenseNet121(weights='./nih/densenet.hdf5', include_top=False);
+
+#### Printing the model summary
+    base_model.summary()
+
+#### Printing out the first five layers
+    layers_l = base_model.layers
+    print(f"There are total {len(layers_l)} layers")
+    print("First 5 layers")
+    layers_l[0:5]
+
+    Output:
+    There are total 427 layers
+    First 5 layers
+    [<keras.engine.input_layer.InputLayer at 0x7f577c626da0>,
+    <keras.layers.convolutional.ZeroPadding2D at 0x7f579c231cc0>,
+    <keras.layers.convolutional.Conv2D at 0x7f579c231c88>,
+    <keras.layers.normalization.BatchNormalization at 0x7f577c4e06d8>,
+    <keras.layers.core.Activation at 0x7f577c4e0a90>]
+
+#### Printing out the last five layers
+    print("Last 5 layers")
+    layers_l[-6:-1]
+
+    Output:
+    Last 5 layers
+    [<keras.layers.normalization.BatchNormalization at 0x7f571c16fcf8>,
+    <keras.layers.core.Activation at 0x7f571c16fef0>,
+    <keras.layers.convolutional.Conv2D at 0x7f571c0fff98>,
+    <keras.layers.merge.Concatenate at 0x7f571c128940>,
+    <keras.layers.normalization.BatchNormalization at 0x7f571c128ac8>]
+
+#### Getting the convolutional layers and print the first 5
+    conv2D_layers = [layer for layer in base_model.layers if str(type(layer)).find('Conv2D') > -1]
+    print("The first five conv2D layers")
+    conv2D_layers[0:5]
+
+    Output:
+    The first five conv2D layers
+    [<keras.layers.convolutional.Conv2D at 0x7f579c231c88>,
+    <keras.layers.convolutional.Conv2D at 0x7f577c4ce0f0>,
+    <keras.layers.convolutional.Conv2D at 0x7f577c5930b8>,
+    <keras.layers.convolutional.Conv2D at 0x7f577c393f60>,
+    <keras.layers.convolutional.Conv2D at 0x7f577c3afe80>]
+
+#### Printing out the total number of convolutional layers
+    print(f"There are {len(conv2D_layers)} convolutional layers")
+    
+    Output:
+    There are 120 convolutional layers
+
+#### Printing the number of channels in the input
+    print("The input has 3 channels")
+    base_model.input
+
+    Output:
+    The input has 3 channels
+    <tf.Tensor 'input_2:0' shape=(?, ?, ?, 3) dtype=float32>
+
+#### Printing the number of output channels
+    print("The output has 1024 channels")
+    x = base_model.output
+    x
+
+    Output:
+    The output has 1024 channels
+    <tf.Tensor 'relu_1/Relu:0' shape=(?, ?, ?, 1024) dtype=float32>
+
+#### Adding a global spatial average pooling layer
+    x_pool = GlobalAveragePooling2D()(x)
+    x_pool
+
+    Output:
+    <tf.Tensor 'global_average_pooling2d_1/Mean:0' shape=(?, 1024) dtype=float32>
+
+#### Defining a set of five class labels to use as an example
+    labels = ['Emphysema', 
+            'Hernia', 
+            'Mass', 
+            'Pneumonia',  
+            'Edema']
+    n_classes = len(labels)
+    print(f"In this example, we want our model to identify {n_classes} classes")
+
+    Output:
+    In this example, we want our model to identify 5 classes
+
+#### Add a logistic layer the same size as the number of classes you're trying to predict
+    predictions = Dense(n_classes, activation="softmax")(x_pool)
+    print(f"Predictions have {n_classes} units, one for each class")
+    predictions
+
+    Output:
+    Predictions have 5 units, one for each class
+    <tf.Tensor 'dense_3/Softmax:0' shape=(?, 5) dtype=float32>
+
+#### Creating an updated model
+    model = Model(inputs=base_model.input, outputs=predictions)
+
+#### Compiling the model
+    model.compile(optimizer='adam',loss='categorical_crossentropy')
+
+#### Training the model
+    model.fit(x=xp_train.reshape([-1,28, 28,1]), y=yp_train, batch_size=32, epochs=5, verbose=1, validation_data=(xp_test.reshape([-1,28, 28,1]), yp_test), callbacks=[early])
+
+    Output:
+    Train on 15000 samples, validate on 10000 samples
+    Epoch 1/200
+    15000/15000 [==============================] - 97s 6ms/sample - loss: 0.7083 - acc: 0.7565 - val_loss: 0.5062 - val_acc: 0.8320
+    Epoch 2/200
+    15000/15000 [==============================] - 86s 6ms/sample - loss: 0.4536 - acc: 0.8375 - val_loss: 0.4013 - val_acc: 0.8510
+    Epoch 3/200
+    15000/15000 [==============================] - 85s 6ms/sample - loss: 0.3651 - acc: 0.8663 - val_loss: 0.4062 - val_acc: 0.8665
+    Epoch 4/200
+    15000/15000 [==============================] - 86s 6ms/sample - loss: 0.3276 - acc: 0.8809 - val_loss: 0.4698 - val_acc: 0.8369
+    Epoch 5/200
+    15000/15000 [==============================] - 85s 6ms/sample - loss: 0.2914 - acc: 0.8925 - val_loss: 0.3424 - val_acc: 0.8786
+
+#### Evaluating the model
+    model.evaluate(xp_test.reshape([-1,28, 28,1]), yp_test, batch_size=32, verbose=1)
+
+    Output:
+    10000/10000 [==============================] - 12s 1ms/sample - loss: 0.5187 - acc: 0.8805
+    [0.5186621437609196, 0.8805]
+
+
+## Patient Overlap and Data Leakage
+
