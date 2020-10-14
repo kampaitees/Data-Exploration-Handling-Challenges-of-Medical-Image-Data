@@ -1,10 +1,10 @@
 # Data Exploration & Handling Challenges of Medical Image Data
 
 In this repo we will discuss the following things step-by-step:
-- [Data Exploration of **ChestX-ray8** dataset](https://nbviewer.jupyter.org/github/kampaitees/Medical-Data-Exploration-Handling-Challenges/blob/main/ChestX-ray8%20Data%20Exploration.ipynb)
-- [Handling **Data Imbalance** within classes of a dataset](https://nbviewer.jupyter.org/github/kampaitees/Medical-Data-Exploration-Handling-Challenges/blob/main/Handling%20Data%20Imbalance%20using%20Weighted%20Loss%20Function.ipynb)
-- [Creating pipeline for training **Densenet** on Medical Data](https://nbviewer.jupyter.org/github/kampaitees/Medical-Data-Exploration-Handling-Challenges/blob/main/Pipeline%20for%20training%20Densenet.ipynb)
-- [**Handling Patient Overlap**(**Data Leakage**) problem in dataset](https://nbviewer.jupyter.org/github/kampaitees/Medical-Data-Exploration-Handling-Challenges/blob/main/Handling%20Patient%20Overlap%20%26%20Data%20Leakage.ipynb)
+- [Data Exploration of **ChestX-ray8** dataset](https://nbviewer.jupyter.org/github/kampaitees/Data-Exploration-Handling-Challenges-of-Medical-Image-Data/blob/main/Notebooks/ChestX-ray8%20Data%20Exploration.ipynb)
+- [Handling **Data Imbalance** within classes of a dataset](https://nbviewer.jupyter.org/github/kampaitees/Data-Exploration-Handling-Challenges-of-Medical-Image-Data/blob/main/Notebooks/Handling%20Data%20Imbalance%20using%20Weighted%20Loss%20Function.ipynb)
+- [Creating pipeline for training **Densenet** on Medical Data](https://nbviewer.jupyter.org/github/kampaitees/Data-Exploration-Handling-Challenges-of-Medical-Image-Data/blob/main/Notebooks/Pipeline%20for%20training%20Densenet.ipynb)
+- [**Handling Patient Overlap**(**Data Leakage**) problem in dataset](https://nbviewer.jupyter.org/github/kampaitees/Data-Exploration-Handling-Challenges-of-Medical-Image-Data/blob/main/Notebooks/Handling%20Patient%20Overlap%20%26%20Data%20Leakage.ipynb)
 <br>
 
 ## Data Exploration of ChestX-ray8 dataset 
